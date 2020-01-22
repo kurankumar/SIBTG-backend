@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authorized, only: [:create]
 
   def index
     @users = User.all
+    render json: { user: @users }
   end
 
   def show
@@ -15,9 +17,18 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def profile
+    render json: { user: current_user }, status: :accepted
+  end
+
   def create
-    user = User.create(user_params)
-    render json: user, status: 201
+    @user = User.create(user_params)
+    if @user.valid?
+      @token = encode_token({ user_id: @user.id })
+      render json: { user: @user, jwt: @token, message: "success" }, status: :created
+    else
+      render json: { message: "failed to create user" }, status: :not_acceptable
+    end
   end
 
   def update
@@ -37,6 +48,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.fetch(:user, {})
+    params.require(:user).permit(:name, :bio, :password)
   end
 end

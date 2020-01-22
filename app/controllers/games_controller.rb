@@ -4,7 +4,8 @@ class GamesController < ApplicationController
   # GET /games
   # GET /games.json
   def index
-    render({ json: Game.all })
+    @games = Game.all
+    render json: @games
   end
 
   # GET /games/1
