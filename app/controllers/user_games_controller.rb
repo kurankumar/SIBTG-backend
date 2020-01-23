@@ -6,6 +6,7 @@ class UserGamesController < ApplicationController
   def create
     @game = Game.find(user_game_params[:game_id])
     @user_game = UserGame.create(user_id: current_user.id, game_id: @game.id)
+    # byebug
     render json: { user_game: @user_game, message: "Game added to your library!" }, status: :ok
   end
 

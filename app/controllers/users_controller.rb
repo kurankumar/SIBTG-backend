@@ -18,9 +18,9 @@ class UsersController < ApplicationController
   end
 
   def profile
-    @wishlist = Wishlist.find(current_user.id)
-    byebug
-    render json: { user: current_user, wishlist: @wishlist.games, library: current_user.games }, status: :accepted
+    @wishlist = current_user.user_games.select { |user_game| user_game.wishlist == true }.map { |user_game| user_game.game }
+    @games = current_user.user_games.select { |user_game| user_game.wishlist == false }.map { |user_game| user_game.game }
+    render json: { user: current_user, wishlist: @wishlist, library: @games }, status: :accepted
   end
 
   def create

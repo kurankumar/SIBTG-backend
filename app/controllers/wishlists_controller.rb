@@ -6,9 +6,9 @@ class WishlistsController < ApplicationController
   end
 
   def create
-    @wishlist = Wishlist.find_or_create_by(user_id: current_user.id)
     @game = Game.find(wishlist_params[:game_id])
-    @wishlist.games << @game
+    @user_game = UserGame.create(user_id: current_user.id, game_id: @game.id, wishlist: true)
+    @wishlist = current_user.user_games.select { |user_game| user_game.wishlist == true }.map { |user_game| user_game.game }
     render json: { wishlist: @wishlist, message: "Game added to your wishlist!" }, status: :ok
   end
 
