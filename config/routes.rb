@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   resources :reviews
   resources :about
   resources :suggest
+  resources :wishlists
+  resources :user_games
 
   resources :users
   post "/login", to: "auth#create"

@@ -18,7 +18,9 @@ class UsersController < ApplicationController
   end
 
   def profile
-    render json: { user: current_user }, status: :accepted
+    @wishlist = Wishlist.find(current_user.id)
+    byebug
+    render json: { user: current_user, wishlist: @wishlist.games, library: current_user.games }, status: :accepted
   end
 
   def create

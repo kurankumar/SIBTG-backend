@@ -6,6 +6,7 @@ class CreateGames < ActiveRecord::Migration[6.0]
       t.integer :score
       t.string :image
 
+      t.integer :wishlist_id
       t.integer :genre_id
 
       t.timestamps

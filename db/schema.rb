@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_153037) do
+ActiveRecord::Schema.define(version: 2020_01_22_204312) do
 
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.integer "score"
     t.string "image"
+    t.integer "wishlist_id"
     t.integer "genre_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -48,6 +49,12 @@ ActiveRecord::Schema.define(version: 2020_01_22_153037) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
+  end
+
+  create_table "wishlists", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
